@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>User dashboard</title>
+	{% load staticfiles %}
+    <script src="{% static 'user_dashboard/js/jquery.js' %}"></script>
+    <script src="{% static 'user_dashboard/js/bootstrap.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'user_dashboard/css/bootstrap.css' %}">
+    <script src="{% static 'user_dashboard/js/jqueryui.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'user_dashboard/css/jqueryui.css' %}">
+    <link rel="stylesheet" href="{% static 'user_dashboard/css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'user_dashboard/css/dashboard.css' %}">
+    <script src="{% static 'user_dashboard/js/main.js' %}"></script>
+</head>
+<body>
+	<div class="dashboardbg"></div>
+	<nav class="navbar navbar-inverse radius">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-headern">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Test App</a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="/dashboard/dashboard_display">Dashboard <span class="sr-only">(current)</span></a></li>
+          <li><a href="{% url 'ud_edituser' %}">Profile</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#">{{ request.session.fname }}. {{ request.session.lInit }}</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Admin tool</a></li>
+              <li><a href="#">Settings</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="{% url 'ud_logout' %}">Log out</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2 col-sm-12 col-xm-12 tbWrap">
+      <table id="allUserMain" class="table table-striped">
+        <h2 class="caption">All users with us</h2>
+        {% if request.session.ul_id == 1 %}
+          <a href="{% url 'ud_adduser' %}" class="btn btn-info addnew">Add new</a>
+        {% endif %}
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Created at</th>
+          <th>User level</th>
+          {% if request.session.ul_id == 1 %}
+          <th>Admin actions</th>
+          {% endif %}
+        </tr>
+        {% for user in users %}
+        <tr>
+          <td>{{ user.id }}</td>
+          <td><a href="/dashboard/users/show/{{user.id}}">{{ user.first_name}} {{ user.last_name }}</a></td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.created_at }}</td>
+          <td>{{ user.userlevel.level_name }}</td>
+          {% if request.session.ul_id == 1 %}
+          <td>
+            <button class="btn btn-link tbBtn"><a href="/dashboard/users/admin/edit/{{user.id}}">Edit</a></button>|
+            <button class="btn btn-link tbBtn" id="popupBtn{{user.id}}">Remove</button>
+          </td>
+
+          <div class="dialog" id="dialog{{user.id}}" title="Delete user">
+            <form action="/dashboard/users/admin/remove/{{user.id}}" method="post">
+            {% csrf_token %}
+              <p>Are you sure to remove user {{user.first_name}} permanantly?</p>
+              <button type="submit" class="btn btn-danger" name="rmOption" value="yes">Yes I want to delete</button>
+              <button type="submit" class="btn btn-default" name="rmOption" value="no">No</button>
+            </form>
+          </div>
+          <script>
+            $(function(){
+              $('.dialog').hide();
+              $('#popupBtn'+{{user.id}}).on('click', function(){
+                $('#dialog'+{{user.id}}).dialog();
+              })
+            })
+          </script>
+          {% endif %}
+        </tr>
+        {% endfor %}
+      </table>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

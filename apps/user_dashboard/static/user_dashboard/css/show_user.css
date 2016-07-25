@@ -1,0 +1,73 @@
+.showUser {
+	padding: 5%;
+	background: rgba(95,46,178,.9);
+	color: #fff;
+}
+.showUser h2 {
+	color: gold;
+}
+.showUser p span {
+	font-weight: bold;
+}
+.leaveMsg {
+	background: rgba(204,172,0,.9);
+	margin-top: 1px;
+	padding-bottom: 2%;
+}
+label[for="post"] {
+	margin-top: 2%;
+	font-style: italic;
+}
+textarea[name="msgContent"] {
+	width: 100%;
+	min-height: 5%;
+}
+.showMsg {
+	background: rgba(95,146,178,.9);
+	margin-top: 1px;
+	margin-bottom: 3%;
+	position:relative;
+}
+.msgBox {
+	background: rgb(0,59,111);
+	color: #FFF;
+	padding: 2%;
+	margin: 1% auto;
+}
+.msgBox p:first-child {
+	border-bottom: 1px solid #fff;
+	font-weight: 300;
+	font-style: italic;
+	font-size: 11px;
+	color: rgb(156,156,156);
+}
+.leaveCmt {
+	width: 100%;
+	display: flex;
+	align-items: flex-end;
+	flex-direction: column;
+}
+.cmtBox {
+	width: 60%;
+	background-color: rgba(210,210,210,1);
+	border: 2px inset rgba(95,146,178,1);
+	color: #003B6F;
+}
+.leaveCmt input {
+	margin-top: 2px;
+	margin-bottom: 5px;
+	width: 10%;
+}
+.cmtInfo {
+	padding: 0;
+	padding-left: 2%;
+	margin: 0;
+	font-size: 11px;
+	font-style: italic;
+	text-decoration: underline;
+}
+.comment {
+	margin-bottom: 8px;
+	padding-left: 2%;
+	color: #fff;
+}

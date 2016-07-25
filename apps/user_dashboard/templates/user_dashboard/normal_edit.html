@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Edit profile</title>
+	{% load staticfiles %}
+    <script src="{% static 'user_dashboard/js/jquery.js' %}"></script>
+    <script src="{% static 'user_dashboard/js/Bootstrap.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'user_dashboard/css/Bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'user_dashboard/css/styles.css' %}">    
+    <link rel="stylesheet" href="{% static 'user_dashboard/css/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'user_dashboard/css/admin_edit.css' %}">
+    <script src="{% static 'user_dashboard/js/main.js' %}"></script>
+</head>
+<body>
+	<div class="dashboardbg"></div>
+	<nav class="navbar navbar-inverse radius">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-headern">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Test App</a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li><a href="/dashboard/dashboard_display">Dashboard</a></li>
+          <li class="active"><a href="{% url 'ud_edituser' %}">Profile <span class="sr-only">(current)</span></a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#">{{ request.session.fname }}. {{ request.session.lInit }}</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Admin tool</a></li>
+              <li><a href="#">Settings</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="{% url 'ud_logout' %}">Log out</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2 col-sm-12 col-xm-12 editWrap">
+      <h3>Edit profile</h3>
+      <button type="text" class="btn btn-link" id="n_showInfo">Show user info</button>
+        <form class="n_editForm" action="/dashboard/users/edit/current" method="post">
+        {% csrf_token %}
+          <div class="form-group">
+            <label for="n_editfName">First name</label>
+            <input type="text" class="form-control nedit" id="n_editfName" name="first_name" placeholder="First name">
+            <input type="hidden" name="first_name_hd" value="{{curUser.first_name}}">
+          </div>
+          <div class="form-group">
+            <label for="n_editlName">Last name</label>
+            <input type="text" class="form-control nedit" id="n_editlName" name="last_name" placeholder="Last name">
+            <input type="hidden" name="last_name_hd" value="{{curUser.last_name}}">
+          </div>   
+          <div class="form-group">
+            <label for="n_editEmail">Email address</label>
+            <input type="text" class="form-control nedit" id="n_editEmail" name="email" placeholder="Email">
+            <input type="hidden" name="email_hd" value="{{curUser.email}}">
+          </div>
+          <div class="form-group">
+            <label for="n_editDescription">Description</label>
+            <input type="text" class="form-control nedit" id="n_editDescription" name="description" placeholder="Description">
+            <input type="hidden" name="description_hd" value="{{curUser.description}}">
+          </div>
+          <div class="form-group">
+            <label for="n_editPassword">Udate password (>8 characters)</label>
+            <input type="password" class="form-control typePw nedit" id="n_editPassword" placeholder="Password" name="password">
+          </div>
+          <div class="form-group">
+            <label for="n_editPasswordConf">Confirm password</label>
+            <input type="password" class="form-control pwConf nedit" id="n_editPasswordConf" placeholder="Confirm password" name="passwordConf">
+          </div>
+          <button type="submit" id="n_updateSubmit" class="btn btn-primary" disabled>Update</button>
+        </form>
+        <a href="{% url 'ud_show_dashboard' %}" class="backLink">Back to dashboard</a>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

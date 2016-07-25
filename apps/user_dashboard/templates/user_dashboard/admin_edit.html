@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Admin edit user</title>
+	{% load staticfiles %}
+    <script src="{% static 'user_dashboard/js/jquery.js' %}"></script>
+    <script src="{% static 'user_dashboard/js/Bootstrap.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'user_dashboard/css/Bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'user_dashboard/css/styles.css' %}">    
+    <link rel="stylesheet" href="{% static 'user_dashboard/css/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'user_dashboard/css/admin_edit.css' %}">
+    <script src="{% static 'user_dashboard/js/main.js' %}"></script>
+</head>
+<body>
+	<div class="dashboardbg"></div>
+	<nav class="navbar navbar-inverse radius">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-headern">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Test App</a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="/dashboard/dashboard_display">Dashboard <span class="sr-only">(current)</span></a></li>
+          <li><a href="{% url 'ud_edituser' %}">Profile</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#">{{ request.session.fname }}. {{ request.session.lInit }}</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Admin tool</a></li>
+              <li><a href="#">Settings</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="{% url 'ud_logout' %}">Log out</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2 col-sm-12 col-xm-12 editWrap">
+        <form class="editForm" action="/dashboard/users/admin/update/{{editingUser.id}}" method="post">
+        {% csrf_token %}
+        <h3>Edit user # {{ editingUser.id }}</h3>
+          <div class="form-group">
+            <label for="editfName">First name</label>
+            <input type="text" class="form-control" id="editfName" name="first_name" placeholder="First name" value="{{request.session.first_name}}">
+            <input type="hidden" name="first_name_hd" value="{{editingUser.first_name}}">
+            {% if msg.fnameErr %}
+            <p class="errMsg">{{ msg.fnameErr }}</p>
+            {% endif %}
+          </div>
+          <div class="form-group">
+            <label for="editlName">Last name</label>
+            <input type="text" class="form-control" id="editlName" name="last_name" placeholder="Last name" value="{{request.session.last_name}}">
+            <input type="hidden" name="last_name_hd" value="{{editingUser.last_name}}">
+            {% if msg.lnameErr %}
+            <p class="errMsg">{{ msg.lnameErr }}</p>
+            {% endif %}
+          </div>   
+          <div class="form-group">
+            <label for="editEmail">Email address</label>
+            <input type="text" class="form-control" id="editEmail" name="email" placeholder="Email" value="{{request.session.email}}">
+            <input type="hidden" name="email_hd" value="{{editingUser.email}}">
+            {% if msg.emailErr0 %}
+            <p class="errMsg">{{ msg.emailErr0 }}</p>
+            {% endif %}
+            {% if msg.emailErr1 %}
+            <p class="errMsg">{{ msg.emailErr1 }}</p>
+            {% endif %}
+          </div>
+          <div class="form-group">
+            <label for="editUl">User level</label>
+            <select name="userlevel_id" id="editUl">
+              <option selected="selected" disabled>Select</option>
+              <option value="2">Normal</option>
+              <option value="1">Admin</option>
+            </select>
+            {% if msg.selectErr %}
+            <p class="errMsg">{{ msg.selectErr }}</p>
+            {% endif %}
+          </div>
+          <div class="form-group">
+            <label for="editPassword">Udate password</label>
+            <input type="password" class="form-control typePw" id="editPassword" placeholder="Password" name="password">
+            {% if msg.pwErr0 %}
+            <p class="errMsg">{{ msg.pwErr0 }}</p>
+            {% endif %}
+          </div>
+          <div class="form-group">
+            <label for="editPasswordConf">Confirm password</label>
+            <input type="password" class="form-control pwConf" id="editPasswordConf" placeholder="Confirm password" name="passwordConf">
+          </div>
+          <button type="submit" id="updateSubmit" class="btn btn-primary">Update</button>
+        </form>
+        <button type="text" class="btn btn-link" id="showInfo">Show info</button>
+        <a href="{% url 'ud_show_dashboard' %}" class="backLink">Back to dashboard</a>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

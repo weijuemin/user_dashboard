@@ -1,0 +1,34 @@
+#allUserMain {
+	padding: 0 1%;
+}
+.caption {
+	color: rgb(156,93,0);
+	font-weight: bold;
+	font-size: 22px;
+	text-align: center;
+	margin: 7% auto 4%;
+}
+.addnew {
+	display: inline-block;
+	margin-left: 80%;
+	margin-bottom: 2%;
+}
+#allUserMain th, #allUserMain td{
+	text-align: center;
+}
+.tbBtn {
+	padding-top: 0;
+	padding-bottom: 0;
+}
+.tbWrap, .editWrap {
+	background-color: rgba(210,210,210,.5);
+	border-radius: 10px;
+	margin-bottom: 5%;
+}
+.editWrap {
+	padding: 3%;
+}
+.editWrap form h3 {
+	font-weight: bold;
+	color: rgb(120,93,70);
+}

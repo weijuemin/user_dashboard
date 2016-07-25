@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User dashboard</title>
+  {% load staticfiles %}
+    <script src="{% static 'user_dashboard/js/jquery.js' %}"></script>
+    <script src="{% static 'user_dashboard/js/bootstrap.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'user_dashboard/css/bootstrap.css' %}">
+    <script src="{% static 'user_dashboard/js/jqueryui.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'user_dashboard/css/jqueryui.css' %}">
+    <link rel="stylesheet" href="{% static 'user_dashboard/css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'user_dashboard/css/show_user.css' %}">
+    <script src="{% static 'user_dashboard/js/main.js' %}"></script>
+</head>
+<body>
+  <div class="dashboardbg"></div>
+  <nav class="navbar navbar-inverse radius">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-headern">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Test App</a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="/dashboard/dashboard_display">Dashboard <span class="sr-only">(current)</span></a></li>
+          <li><a href="{% url 'ud_edituser' %}">Profile</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#">{{ request.session.fname }}. {{ request.session.lInit }}</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Admin tool</a></li>
+              <li><a href="#">Settings</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="{% url 'ud_logout' %}">Log out</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2 col-sm-12 col-xm-12 showUser">
+        <h2 class="caption">Details of user # {{displayedUser.id}}</h2>
+        <p><span>Name:</span> {{displayedUser.first_name}} {{displayedUser.last_name}}</p>
+        <p><span>Email:</span> {{displayedUser.email}}</p>
+        {% if displayedUser.description %}
+        <p><span>Description:</span> 
+        {{ displayedUser.description }}
+        {% endif %}</p>
+        <p><span>Registered at:</span> {{displayedUser.created_at}}</p>
+      </div>
+      <div class="col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2 col-sm-12 col-xm-12 leaveMsg">
+        <form action="/dashboard/users/show/{{displayedUser.id}}/post" method="post">
+        {% csrf_token %}
+          <label for="post">Leave a message for {{displayedUser.first_name}}</label><br>
+          <textarea name="msgContent" id="post"></textarea>
+          <button class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+      {% if dUserMsgs %}
+      <div class="col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2 col-sm-12 col-xm-12 showMsg">
+        {% for m in dUserMsgs %}
+        <div class="msgBox">
+          <p>{{ m.user.first_name }} wrote @ {{ m.updated_at }}: </p>
+          <p>{{ m.message }}</p>
+        </div>
+          {% for cmt in dUserCmts %}
+            {% if cmt.message_id == m.id %}
+              <p class="cmtInfo">{{cmt.user.first_name}} {{cmt.user.last_name}} commented @ {{cmt.updated_at}}: </p>
+              <p class="comment">{{cmt.comment}}</p>
+            {% endif %}
+          {% endfor %}
+        <div >
+          <form action="/dashboard/users/show/{{displayedUser.id}}/{{m.id}}/comment" class="leaveCmt" method="post">
+          {% csrf_token %}
+            <textarea type="text" class="cmtBox" name="cmtContent"></textarea>
+            <input type="submit" class="btn btn-default btn-xs" value="Comment">
+          </form>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+</body>
+</html>
