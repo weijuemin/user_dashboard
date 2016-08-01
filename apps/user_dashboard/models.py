@@ -1,29 +1,29 @@
 from __future__ import unicode_literals
 from django.db import models
-import re
 import bcrypt
-EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9\.\+_-]+@[a-zA-Z0-9\._-]+\.[a-zA-Z]*$')
 
-# Create your models here.
 class Validator(object):
-	def isEmpty(self, form, inputName):
-		testInput = form[inputName]
-		if len(testInput) < 1:
+	def __init__(self):
+		self.error = False
+		self.msg = {}
+	def emailExist(self, formInput):
+		email = formInput
+		if User.objects.get(email=email):
 			return True
-		else:
-			return False
-	def emailInvalid(self, form, inputName):
-		email = form[inputName]
-		if not EMAIL_REGEX.match(email):
-			return True
-		else:
-			return False
-	def pwIsShort(self, form, inputName):
-		testInput = form[inputName]
-		if len(testInput) < 8:
-			return True
-		else:
-			return False
+		return False
+	## Front+back end validation method. Deprecated
+	# def isEmpty(self, form):
+	# 	testInput = form['val']
+	# 	if len(testInput) < form['len']:
+	# 		self.error = True
+	# 		self.msg[form['name']] = '{} must be more than {} characters'.format(form['name'].capitalize(), form['len'])
+	# 	return [self.error, self.msg]
+	# def emailInvalid(self, form):
+	# 	email = form['val']
+	# 	if not EMAIL_REGEX.match(email):
+	# 		self.error = True
+	# 		self.msg['emailInvalid'] = 'Invalid email'
+	# 	return [self.error, self.msg]
 
 class UserManager(models.Manager):
 	def isAdmin(self):
@@ -31,11 +31,6 @@ class UserManager(models.Manager):
 			return True
 		else:
 			return False
-	def logout(self, session):
-		keyList = ['first_name','last_name','fname','lInit','email','user_id','ul_id']
-		for key in keyList:
-			if key in session:
-				session.pop(key)
 	def isLoggedIn(self, session):
 		if 'user_id' in session:
 			return True

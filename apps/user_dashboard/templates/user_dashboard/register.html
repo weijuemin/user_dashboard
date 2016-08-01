@@ -36,50 +36,40 @@
   </nav>
   <div class="container-fluid lrWrap">
     <div class="row">
-      <div class="col-lg-4 col-lg-offset-4 col-md-4 col-lg-offset-4 col-sm-8 col-sm-offset-2 col-xm-10 col-xm-offset-1">
+      <div class="col-lg-4 col-lg-offset-4 col-md-4 col-lg-offset-4 col-md-offset-4 col-sm-8 col-sm-offset-2 col-xm-10 col-xm-offset-1">
       <h3>Become a member today!</h3>
       <a href="{% url 'ud_login' %}">Already a memeber? Login here</a>
-        <form class="lrForm" action="{% url 'ud_register_process' %}" method="post">
+        <form class="lrForm" action="{% url 'ud_register_process' %}" method="post" name="registration">
         {% csrf_token %}
           <div class="form-group">
             <label for="regfName">First name</label>
-            <input type="text" class="form-control" id="regfName" name="first_name" placeholder="First name" value="{{request.session.first_name}}">
-            {% if msg.fnameErr %}
-            <p class="errMsg">{{ msg.fnameErr }}</p>
-            {% endif %}
+            <input type="text" class="validate form-control" id="regfName" name="first_name" placeholder="First name" value="{{request.session.first_name}}">
+            <div class="showErr"></div>
           </div>
           <div class="form-group">
             <label for="reglName">Last name</label>
-            <input type="text" class="form-control" id="reglName" name="last_name" placeholder="Last name" value="{{request.session.last_name}}">
-            {% if msg.lnameErr %}
-            <p class="errMsg">{{ msg.lnameErr }}</p>
-            {% endif %}
+            <input type="text" class="validate form-control" id="reglName" name="last_name" placeholder="Last name" value="{{request.session.last_name}}">
+            <div class="showErr"></div>
           </div>   
           <div class="form-group">
             <label for="regEmail">Email address</label>
-            <input type="text" class="form-control" id="regEmail" name="email" placeholder="Email" value="{{request.session.email}}">
-            {% if msg.emailErr0 %}
-            <p class="errMsg">{{ msg.emailErr0 }}</p>
-            {% endif %}
-            {% if msg.emailErr1 %}
-            <p class="errMsg">{{ msg.emailErr1 }}</p>
-            {% endif %}
-            {% if msg.existErr %}
-            <p class="errMsg">{{ msg.existErr }}</p>
-            {% endif %}
+            <input type="text" class="validate form-control" id="regEmail" name="email" placeholder="Email" value="{{request.session.email}}">
+            <div class="showErr">
+              {% if 'existErr' in msg %}
+              <p class="errMsg">{{msg.existErr}}</p>
+              {% endif %}
+            </div>
           </div>
           <div class="form-group">
             <label for="regPassword">Password</label>
-            <input type="password" class="form-control typePw" id="regPassword" placeholder="Password" name="password">
-            {% if msg.pwErr0 %}
-            <p class="errMsg">{{ msg.pwErr0 }}</p>
-            {% endif %}
+            <input type="password" class="validate form-control typePw" id="regPassword" placeholder="Password" name="password">
+            <div class="showErr"></div>
           </div>
           <div class="form-group">
             <label for="regPasswordConf">Confirm password</label>
-            <input type="password" class="form-control pwConf" id="regPasswordConf" placeholder="Confirm password" name="passwordConf">
+            <input type="password" class="validate form-control pwConf" id="regPasswordConf" placeholder="Confirm password" name="passwordConf">
           </div>
-          <button type="submit" id="regSubmit" class="btn btn-primary">Register</button>
+          <button type="submit" id="regSubmit" class="btn btn-primary submit" disabled>Register</button>
         </form>
       </div>
     </div>

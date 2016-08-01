@@ -36,35 +36,30 @@
   </nav>
   <div class="container-fluid lrWrap">
     <div class="row">
-      <div class="col-lg-4 col-lg-offset-4 col-md-4 col-lg-offset-4 col-sm-8 col-sm-offset-2 col-xm-10 col-xm-offset-1">
+      <div class="col-lg-4 col-lg-offset-4 col-md-4 col-lg-offset-4 col-md-offset-4 col-sm-8 col-sm-offset-2 col-xm-10 col-xm-offset-1">
       <h3>Welcome back, loyal customer!</h3>
       <a href="{% url 'ud_register' %}">Not a member yet? Register now</a>
-        <form class="lrForm" action="{% url 'ud_login_process' %}" method="post">
-        {% csrf_token %}  
+        <form class="lrForm" action="{% url 'ud_login_process' %}" method="post" name="login">
+        {% csrf_token %}
           <div class="form-group">
             <label for="loginEmail">Email address</label>
-            <input type="text" class="form-control" id="loginEmail" name="email" placeholder="Email" value="{{request.session.email}}">
-            {% if msg.emailErr0 %}
-            <p class="errMsg">{{ msg.emailErr0 }}</p>
-            {% endif %}
-            {% if msg.emailErr1 %}
-            <p class="errMsg">{{ msg.emailErr1 }}</p>
-            {% endif %}
-            {% if msg.existErr %}
-            <p class="errMsg">{{ msg.existErr }}</p>
-            {% endif %}
+            <input type="text" class="form-control validate" id="loginEmail" name="email" placeholder="Email" value="{{request.session.email}}">
+            <div class="showErr">
+              {% if 'existErr' in msg %}
+              <p class="errMsg">{{msg.existErr}}</p>
+              {% endif %}
+            </div>
           </div>
           <div class="form-group">
             <label for="loginPassword">Password</label>
-            <input type="password" class="form-control" id="loginPassword" name="password" placeholder="Password">
-            {% if msg.pwErr0 %}
-            <p class="errMsg">{{ msg.pwErr0 }}</p>
-            {% endif %}
-            {% if msg.pwErr1 %}
-            <p class="errMsg">{{ msg.pwErr1 }}</p>
-            {% endif %}
+            <input type="password" class="form-control validate" id="loginPassword" name="password" placeholder="Password">
+            <div class="showErr">
+              {% if 'pwErr' in msg %}
+              <p class="errMsg">{{msg.pwErr}}</p>
+              {% endif %}
+            </div>
           </div>
-          <button type="submit" id="loginSubmit" class="btn btn-primary">Login</button>
+          <button type="submit" id="loginSubmit" class="btn btn-primary submit" disabled>Login</button>
         </form>
       </div>
     </div>

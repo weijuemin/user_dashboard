@@ -10,7 +10,7 @@
 	font-weight: bold;
 }
 .leaveMsg {
-	background: rgba(204,172,0,.9);
+	background: rgba(180,180,180,.9);
 	margin-top: 1px;
 	padding-bottom: 2%;
 }
@@ -20,7 +20,10 @@ label[for="post"] {
 }
 textarea[name="msgContent"] {
 	width: 100%;
-	min-height: 5%;
+	min-height: 5vh;
+	margin-bottom: 5px;
+	padding-top: 0;
+	vertical-align: top;
 }
 .showMsg {
 	background: rgba(95,146,178,.9);

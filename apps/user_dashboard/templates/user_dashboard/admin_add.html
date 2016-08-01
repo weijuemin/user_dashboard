@@ -56,27 +56,22 @@
         <h3>Add a user</h3>
           <div class="form-group">
             <label for="editfName">First name</label>
-            <input type="text" class="form-control" id="editfName" name="first_name" placeholder="First name" value="{{request.session.first_name}}">
-            {% if msg.fnameErr %}
-            <p class="errMsg">{{ msg.fnameErr }}</p>
-            {% endif %}
+            <input type="text" class="validate form-control" id="editfName" name="first_name" placeholder="First name" value="{{request.session.first_name}}">
+            <div class="showErr"></div>
           </div>
           <div class="form-group">
             <label for="editlName">Last name</label>
-            <input type="text" class="form-control" id="editlName" name="last_name" placeholder="Last name" value="{{request.session.last_name}}">
-            {% if msg.lnameErr %}
-            <p class="errMsg">{{ msg.lnameErr }}</p>
-            {% endif %}
+            <input type="text" class="validate form-control" id="editlName" name="last_name" placeholder="Last name" value="{{request.session.last_name}}">
+            <div class="showErr"></div>
           </div>   
           <div class="form-group">
             <label for="editEmail">Email address</label>
-            <input type="text" class="form-control" id="editEmail" name="email" placeholder="Email" value="{{request.session.email}}">
-            {% if msg.emailErr0 %}
-            <p class="errMsg">{{ msg.emailErr0 }}</p>
-            {% endif %}
-            {% if msg.emailErr1 %}
-            <p class="errMsg">{{ msg.emailErr1 }}</p>
-            {% endif %}
+            <input type="text" class="validate form-control" id="editEmail" name="email" placeholder="Email" value="{{request.session.email}}">
+            <div class="showErr">
+              {% if 'existErr' in msg %}
+                <p class="errMsg">{{msg.existErr}}</p>
+              {% endif %}
+            </div>
           </div>
           <div class="form-group">
             <label for="editUl">User level</label>
@@ -85,20 +80,15 @@
               <option value="2">Normal</option>
               <option value="1">Admin</option>
             </select>
-            {% if msg.selectErr %}
-            <p class="errMsg">{{ msg.selectErr }}</p>
-            {% endif %}
           </div>
           <div class="form-group">
             <label for="editPassword">Udate password</label>
-            <input type="password" class="form-control typePw" id="editPassword" placeholder="Password" name="password">
-            {% if msg.pwErr0 %}
-            <p class="errMsg">{{ msg.pwErr0 }}</p>
-            {% endif %}
+            <input type="password" class="validate form-control typePw" id="editPassword" placeholder="Password" name="password">
+            <div class="showErr"></div>
           </div>
           <div class="form-group">
             <label for="editPasswordConf">Confirm password</label>
-            <input type="password" class="form-control pwConf" id="editPasswordConf" placeholder="Confirm password" name="passwordConf">
+            <input type="password" class="validate form-control pwConf" id="editPasswordConf" placeholder="Confirm password" name="passwordConf">
           </div>
           <button type="submit" id="updateSubmit" class="btn btn-primary">Add</button>
         </form>

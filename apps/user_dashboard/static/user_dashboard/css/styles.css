@@ -22,3 +22,6 @@
 	font-size: 12px;
 	font-style: italic;
 }
+.errInput {
+	color: red;
+}

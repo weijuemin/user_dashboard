@@ -3,6 +3,7 @@ from . import views
 
 urlpatterns = [
 	url(r'^$', views.index, name='ud_index'),
+	# url(r'^validation$', views.validate, name='ud_validation'),
 	url(r'^login$', views.login, name='ud_login'),
 	url(r'^login/process$', views.loginProcess, name='ud_login_process'),
 	url(r'^register$', views.register, name='ud_register'),
